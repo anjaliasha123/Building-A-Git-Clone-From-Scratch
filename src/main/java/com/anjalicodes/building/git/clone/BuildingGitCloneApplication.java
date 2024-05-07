@@ -12,7 +12,14 @@ import java.util.Scanner;
 
 public class BuildingGitCloneApplication {
 	private static final String GIT_DIR = Paths.get("").toAbsolutePath().toString();
-	private static String computeFileHash(File file) {
+	private static byte[] concatByteArrays(byte[]... arrays) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		for (byte[] array : arrays) {
+			outputStream.write(array, 0, array.length);
+		}
+		return outputStream.toByteArray();
+	}
+	private static String computeFileHash(File file, String fileType) {
 		String sha1 = null;
 		MessageDigest digest;
 		try{
@@ -21,6 +28,8 @@ public class BuildingGitCloneApplication {
 			byte[] data = new byte[(int)file.length()];
 			inputStream.read(data);
 			byte[] buffer = new byte[8192];
+//			byte[] typeBytes = fileType.getBytes("UTF-8");
+//			byte[] concatenatedData = concatByteArrays(typeBytes, new byte[]{0x00}, buffer);
 			int read = 0;
 			while((read = inputStream.read(buffer)) != -1) digest.update(buffer, 0, read);
 			inputStream.close();
@@ -114,7 +123,8 @@ public class BuildingGitCloneApplication {
 					String path = Paths.get("").toAbsolutePath()
 							.toString()+"\\"+args[1];
 					//read the contents of the file and hash it
-					String oid = computeFileHash(new File(path));
+					String type = "blob";
+					String oid = computeFileHash(new File(path), type);
 					System.out.println("OID: "+oid);
 				}catch(ArrayIndexOutOfBoundsException e){
 					System.out.println("Please enter the path to the file");
@@ -123,10 +133,16 @@ public class BuildingGitCloneApplication {
 //			da39a3ee5e6b4b0d3255bfef95601890afd80709
 			break;
 			case "cat-file":{
+				System.out.flush();
 				String oid = args[1];
 				catFile(oid);
 			}
 			break;
+			case "write-tree": {
+				Base base = new Base();
+				base.writeTree(".");
+			}
+				break;
 			default : System.out.println("Unknown git command: " + command);
 		}
 	}
