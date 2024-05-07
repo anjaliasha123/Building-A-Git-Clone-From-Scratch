@@ -7,4 +7,5 @@ This is a project that builds a Git clone from scratch
     <li> Add type to the objects to help with cat-file command ----> not implemented</li>
     <li>Adding a base class to store the directories</li>
     <li>Implement write-tree git command. It is used to store the current directory into the object database.</li>
+    <li>Ignore the .mygit files when listing the tree using write-tree command.</li>
 </ol>
