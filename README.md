@@ -1,6 +1,5 @@
 # Building-A-Git-Clone-From-Scratch
-![image](https://github.com/anjaliasha123/Building-A-Git-Clone-From-Scratch/assets/66244077/9947d375-292b-4c4f-8f57-9bdfa7aff11f)
-
+![image](https://github.com/anjaliasha123/Building-A-Git-Clone-From-Scratch/assets/66244077/5152c988-8a85-4da8-b2ad-8196d4ab544f)
 This is a project that builds a Git clone from scratch
 <ol>
     <li> Implement git init to initialize a git repository by creating a .git directory and some files inside it.</li>
